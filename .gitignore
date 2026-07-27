@@ -1,0 +1,5 @@
+venv/
+__MACOSX/
+.DS_Store
+For coding/
+*.zip
