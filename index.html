@@ -7,7 +7,6 @@
     <style>
         body {
             margin: 0;
-            /* Premium Sky Blue Gradient */
             background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
             color: #ffffff;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -16,10 +15,12 @@
             align-items: center;
             min-height: 100vh;
             padding-bottom: 5rem;
-            background-attachment: fixed; /* Keeps gradient smooth when scrolling */
+            background-attachment: fixed; 
+            /* Prevents horizontal scrolling on mobile */
+            overflow-x: hidden;
+            max-width: 100vw;
         }
 
-        /* Glassmorphic Header for Controls */
         .controls-header {
             position: sticky;
             top: 0;
@@ -80,7 +81,6 @@
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
         }
 
-        /* Gallery Layout */
         .gallery {
             display: flex;
             flex-direction: column;
@@ -97,7 +97,6 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            /* Removed the white box background, shadow, and borders */
             box-sizing: border-box;
         }
 
@@ -112,14 +111,13 @@
             text-align: center;
         }
 
-        /* 
-           Wrapper for the sprite to handle responsive scaling.
-        */
         .sprite-wrapper {
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: flex-start;
+            /* Prevents layout bleed */
+            overflow: hidden;
         }
 
         .sprite-container {
@@ -128,7 +126,6 @@
             background-repeat: no-repeat;
             background-position: 0px 0px;
             transform-origin: top center; 
-            /* Subtle drop shadow to make the images pop off the blue background */
             filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
         }
 
@@ -145,7 +142,6 @@
 
     <div class="gallery">
         
-        <!-- Open Page (16:9 ratio, high-res) -->
         <div class="animation-row">
             <h3 class="row-title">Open Page</h3>
             <div class="sprite-wrapper">
@@ -153,7 +149,6 @@
             </div>
         </div>
 
-        <!-- Page 1 -->
         <div class="animation-row">
             <h3 class="row-title">Page 1</h3>
             <div class="sprite-wrapper">
@@ -161,7 +156,6 @@
             </div>
         </div>
 
-        <!-- Page 2 -->
         <div class="animation-row">
             <h3 class="row-title">Page 2</h3>
             <div class="sprite-wrapper">
@@ -169,7 +163,6 @@
             </div>
         </div>
 
-        <!-- Page 3 -->
         <div class="animation-row">
             <h3 class="row-title">Page 3</h3>
             <div class="sprite-wrapper">
@@ -177,7 +170,6 @@
             </div>
         </div>
 
-        <!-- Page 4 -->
         <div class="animation-row">
             <h3 class="row-title">Page 4</h3>
             <div class="sprite-wrapper">
@@ -185,7 +177,6 @@
             </div>
         </div>
 
-        <!-- Page 5 -->
         <div class="animation-row">
             <h3 class="row-title">Page 5</h3>
             <div class="sprite-wrapper">
@@ -237,10 +228,16 @@
                 
                 if (nativeWidth > availableWidth) {
                     const scale = availableWidth / nativeWidth;
+                    // Pin it to the top left and let it fill the wrapper exactly
+                    animator.style.transformOrigin = 'top left';
                     animator.style.transform = `scale(${scale})`;
+                    wrapper.style.justifyContent = 'flex-start';
                     wrapper.style.height = `${nativeHeight * scale}px`;
                 } else {
+                    // Center it normally if there is enough room
+                    animator.style.transformOrigin = 'top center';
                     animator.style.transform = `scale(1)`;
+                    wrapper.style.justifyContent = 'center';
                     wrapper.style.height = `${nativeHeight}px`;
                 }
             });
